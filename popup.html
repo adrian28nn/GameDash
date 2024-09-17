@@ -3,36 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameFlick</title>
+  <title>GameDash</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; width: 300px; }
-    .header, .footer { padding: 10px; background-color: #f1f1f1; }
-    .header button { width: 100%; padding: 10px; font-size: 16px; cursor: pointer; }
-    .game-list { max-height: 200px; overflow-y: auto; padding: 10px; }
-    .game-item { display: flex; align-items: center; margin-bottom: 5px; }
-    .game-item img { width: 16px; height: 16px; margin-right: 10px; }
-    .footer { display: flex; justify-content: space-between; align-items: center; }
-    .footer a { margin-left: 5px; }
+    body { 
+      font-family: system-ui; 
+      margin: 0; 
+      padding: 0; 
+      width: 300px; 
+      background-color: #1e2030; 
+    }
+
+    .header, .footer { 
+      padding: 15px; 
+      background-color: #363a4f; 
+    }
+
+    .header button { 
+      width: 100%; 
+      padding: 10px; 
+      font-size: 16px; 
+      font-weight: bold; 
+      cursor: pointer;
+      background-image: linear-gradient(to right, #c6a0f6, #c6a0f6); 
+      border-radius: 11px; 
+      border: none; 
+      outline: none; 
+      color: #363a4f; 
+      transition: all 0.2s ease-in-out; 
+      transform: scale(1); 
+    }
+
+    .header button:hover {
+      filter: brightness(1.15); 
+      transform: scale(1.03); 
+    }
+
+    .info-text {
+      font-size: 14px;
+      margin: 4px 0px 0px 15px;
+      color: #6e738d;
+}
+
+    .game-list { 
+      max-height: 200px; 
+      overflow-y: auto; 
+      padding: 0px; 
+      margin: 6px 15px 15px 15px;
+    }
+
+    .game-item { 
+      display: flex; 
+      align-items: center; 
+      margin-bottom: 5px; 
+      font-weight: normal; 
+      color: #b8c0e0; 
+      transition: font-weight 0.3s; 
+    }
+
+    .game-item:hover { 
+      font-weight: bold; 
+      color: #c6a0f6; 
+    }
+
+    .game-item a { 
+      text-decoration: none; 
+      color: inherit; 
+    }
+
+    .game-item a:hover { 
+      color: inherit; 
+    }
+
+    .game-item img { 
+      width: 20px; 
+      height: 20px; 
+      margin-right: 10px; 
+    }
+
+    .footer { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 6px 10px 6px 10px; 
+      margin: 12px;
+      border-radius: 15px;
+    }
+
+    .footer span { 
+      font-size: 16px; 
+      font-weight: bold; 
+      color: #a5adcb; 
+      margin-left: 5px;
+    }
+
+    .footer img { 
+      vertical-align: middle; 
+      object-fit: contain; 
+      transition: filter 0.3s; 
+      margin-left: 3px;
+    }
+
+    .footer a {
+      margin-right: 0px;
+    }
+
+    .footer a:hover img {
+      filter: brightness(1.3);
+    }
+
+    .svg-ko-fi {
+      width: 25px;
+      height: 25px;
+    }
+
+    .svg-github {
+      width: 23px;
+      height: 23px;
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
   <!-- Header with Random Game Button -->
   <div class="header">
-    <button id="random-game-btn">Play a Random Game</button>
+    <button id="random-game-btn">Play a Random Game!</button>
   </div>
-
+  <div class="info-text">
+    The last 15 games played:
+  </div>
   <!-- Scrollable List of Recent Games -->
-  <div class="game-list" id="game-list"></div>
+  <div class="game-list" id="game-list">
+    <!-- Game items will be inserted here -->
+  </div>
 
   <!-- Footer with Extension Name and Links -->
   <div class="footer">
     <span>GameDash</span>
     <div>
       <a href="https://ko-fi.com/nairdah" target="_blank">
-        <img src="icons/ko-fi.svg" alt="Ko-fi" width="20">
-      </a>
-      <a href="https://github.com/adrian28nn" target="_blank">
-        <img src="icons/github.svg" alt="GitHub" width="20">
+        <img src="icons/ko-fi.svg" alt="Ko-fi" class="svg-ko-fi"></a>
+      <a href="https://github.com/adrian28nn/GameDash" target="_blank">
+        <img src="icons/github.svg" alt="GitHub" class="svg-github">
       </a>
     </div>
   </div>

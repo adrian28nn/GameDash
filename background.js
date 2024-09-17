@@ -1,6 +1,4 @@
-// background.js
-
-// Function to open a new tab and get the title of the game
+// Open a new tab and get the title of the game
 function openTabAndGetTitle(url) {
     browser.tabs.create({ url, active: true }, (tab) => {
       // Wait for the tab to load
@@ -19,9 +17,8 @@ function openTabAndGetTitle(url) {
                   browser.storage.local.set({ recentGames });
                 });
               }
-              // Do not close the tab; keep it open for user to play the game
             });
-          }, 2000); // 2 seconds delay
+          }, 0); // delay
         }
       });
     });

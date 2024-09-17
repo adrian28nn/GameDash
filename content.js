@@ -1,12 +1,10 @@
-// content.js
-
-// Function to extract the game title from the page
+// Extract the game title from the page
 function getGameTitle() {
     const titleElement = document.querySelector('.header .game_title');
     if (titleElement) {
       return titleElement.textContent.trim();
     }
-    return '-title not found-'; // Fallback if the title is not found
+    return '-title not found-'; // if the title is not found
   }
   
   // Listen for messages from the popup script
