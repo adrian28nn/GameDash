@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameFlick</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; width: 300px; }
+    .header, .footer { padding: 10px; background-color: #f1f1f1; }
+    .header button { width: 100%; padding: 10px; font-size: 16px; cursor: pointer; }
+    .game-list { max-height: 200px; overflow-y: auto; padding: 10px; }
+    .game-item { display: flex; align-items: center; margin-bottom: 5px; }
+    .game-item img { width: 16px; height: 16px; margin-right: 10px; }
+    .footer { display: flex; justify-content: space-between; align-items: center; }
+    .footer a { margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <!-- Header with Random Game Button -->
+  <div class="header">
+    <button id="random-game-btn">Play a Random Game</button>
+  </div>
+
+  <!-- Scrollable List of Recent Games -->
+  <div class="game-list" id="game-list"></div>
+
+  <!-- Footer with Extension Name and Links -->
+  <div class="footer">
+    <span>GameDash</span>
+    <div>
+      <a href="https://ko-fi.com/nairdah" target="_blank">
+        <img src="icons/ko-fi.svg" alt="Ko-fi" width="20">
+      </a>
+      <a href="https://github.com/adrian28nn" target="_blank">
+        <img src="icons/github.svg" alt="GitHub" width="20">
+      </a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

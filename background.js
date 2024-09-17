@@ -1,38 +1,37 @@
-// Curated list of browser-based itch.io games
-const games = [
-    "https://ncase.itch.io/anxiety",
-    "https://ninja-muffin24.itch.io/funkin",
-    "https://ncase.itch.io/wbwwb",
-    "https://picogram.itch.io/goodbye-doggy",
-    "https://teambeanloop.itch.io/six-cats-under",
-    "https://graebor.itch.io/sort-the-court",
-    "https://ncase.itch.io/wbwwb",
-    "https://paranoidhawk.itch.io/lookouts",
-    "https://qwook.itch.io/last-seen-online",
-    "https://idrellegames.itch.io/wayfarer",
-    "https://anya-writes.itch.io/scout-an-apocalypse-story",
-    "https://waxwing0.itch.io/fbc",
-    "https://poncle.itch.io/vampire-survivors",
-    "https://llamagirl.itch.io/the-bastard-of-camelot",
-    "https://pomepomelo.itch.io/irori",
-    "https://speakergame.itch.io/speaker",
-    "https://ncase.itch.io/coming-out-simulator-2014",
-    "https://adayofjoy.itch.io/exhibit-of-sorrows",
-    "https://nivrad00.itch.io/purrgatory",
-    "https://haraiva.itch.io/novena",
-    "https://gmtk.itch.io/platformer-toolkit",
-    "https://qeresi.itch.io/a-tale-of-crowns"
-  ];
-  
-  // Function to get a random game URL
-  function getRandomGame() {
-    const randomIndex = Math.floor(Math.random() * games.length);
-    return games[randomIndex];
+// background.js
+
+// Function to open a new tab and get the title of the game
+function openTabAndGetTitle(url) {
+    browser.tabs.create({ url, active: true }, (tab) => {
+      // Wait for the tab to load
+      browser.tabs.onUpdated.addListener(function onUpdate(tabId, changeInfo) {
+        if (tabId === tab.id && changeInfo.status === 'complete') {
+          // Add a delay before sending the message to fetch the title
+          setTimeout(() => {
+            browser.tabs.sendMessage(tabId, { action: 'getTitle' }, (response) => {
+              if (response && response.title) {
+                // Handle the title here
+                browser.storage.local.get('recentGames', (data) => {
+                  let recentGames = data.recentGames || [];
+                  recentGames = recentGames.filter(g => g.url !== url);
+                  recentGames.unshift({ url, title: response.title });
+                  recentGames = recentGames.slice(0, 15);
+                  browser.storage.local.set({ recentGames });
+                });
+              }
+              // Do not close the tab; keep it open for user to play the game
+            });
+          }, 2000); // 2 seconds delay
+        }
+      });
+    });
   }
   
-  // Listen for toolbar button click
-  browser.browserAction.onClicked.addListener(() => {
-    const randomGame = getRandomGame();
-    browser.tabs.create({ url: randomGame });
+  // Listen for messages from popup.js
+  browser.runtime.onMessage.addListener((message) => {
+    if (message.action === 'openRandomGame') {
+      const randomGameUrl = message.url;
+      openTabAndGetTitle(randomGameUrl);
+    }
   });
   

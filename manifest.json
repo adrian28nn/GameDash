@@ -1,19 +1,27 @@
 {
-    "manifest_version": 2,
-    "name": "GameFlick",
-    "version": "1.0",
-    "description": "Click to play a random itch.io browser game when you're bored!",
-    "permissions": [
-      "tabs"
-    ],
-    "background": {
-      "scripts": ["background.js"]
-    },
-    "browser_action": {
-      "default_title": "Play a Random Game"
-    },
-    "icons": {
-      "48": "icon.png"
+  "manifest_version": 2,
+  "name": "GameDash",
+  "version": "0.9.0",
+  "description": "Click to play a random browser game when you're bored!",
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Play a Random Game"
+  },
+  "icons": {
+    "48": "icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.itch.io/*"],
+      "js": ["content.js"]
     }
+  ],
+  "background": {
+    "scripts": ["background.js"]
   }
-  
+}
