@@ -16,4 +16,6 @@ This extension lets you play a random browser-based game from a curated collecti
 
 <p align="center"><a href="https://ko-fi.com/nairdah"><img src="https://ko-fi.com/img/githubbutton_sm.svg" /></a></p>
 
+</br>
+
 <sub>Extension's color theme based on [@Catppuccin](https://github.com/catppuccin).</sub>
