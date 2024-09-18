@@ -12,7 +12,7 @@ This extension lets you play a random browser-based game from a curated collecti
 
 </br>
 
-<p align="center"><a href="https://addons.mozilla.org/en-US/firefox/addon/imdb-to-letterboxd-redirect/"><img src="https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png" /></a></p>
+<p align="center"><a href="https://addons.mozilla.org/en-US/firefox/addon/gamedash/"><img src="https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png" /></a></p>
 
 <p align="center"><a href="https://ko-fi.com/nairdah"><img src="https://ko-fi.com/img/githubbutton_sm.svg" /></a></p>
 
