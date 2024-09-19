@@ -1,4 +1,4 @@
-// Curated list of itch.io games playable in browser
+// Curated list from GitHub of itch.io games playable in browser
 const gamesFileURL = 'https://raw.githubusercontent.com/adrian28nn/GameDash/main/games.txt'; 
 
 // Get a random game URL from the list
@@ -46,8 +46,7 @@ function renderGameList(recentGames) {
       gameItem.className = 'game-item';
 
       const favicon = document.createElement('img');
-      favicon.src = `https://www.google.com/s2/favicons?domain=${game.url}`;
-      favicon.alt = game.title;
+      favicon.src = game.favicon;
 
       const gameLink = document.createElement('a');
       gameLink.href = game.url;
@@ -63,7 +62,6 @@ function renderGameList(recentGames) {
 // Event listener for random game button
 document.getElementById('random-game-btn').addEventListener('click', async () => {
   const randomGameUrl = await getRandomGame();
-  
   // Update recent games list
   updateRecentGames(randomGameUrl);
 });
