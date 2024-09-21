@@ -121,6 +121,72 @@
       height: 23px;
       margin-right: 5px;
     }
+
+    .settings-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.settings-btn {
+  padding: 8px 15px;
+  background-color: #6e738d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.settings-btn:hover {
+  background-color: #b8c0e0;
+}
+
+/* Adjusting the dropdown to cover the entire popup */
+.settings-dropdown {
+  position: absolute;
+  top: 100px; /* Just below the settings button */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 50px); /* Covering from the button down to the footer */
+  background-color: #363a4f;
+  border-radius: 0 0 10px 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 999; /* Ensuring it covers all content */
+  display: none; /* Initially hidden */
+  transition: opacity 0.3s ease, max-height 0.3s ease; /* Smooth animation */
+  opacity: 0;
+}
+
+/* When the dropdown is visible */
+.settings-dropdown.show {
+  display: block;
+  opacity: 1;
+}
+
+.tag {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: #6e738d;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tag.disabled {
+  background-color: #b0b0b0;
+}
+
+.tag:hover {
+  background-color: #c6a0f6;
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -128,6 +194,19 @@
   <div class="header">
     <button id="random-game-btn">Play a Random Game!</button>
   </div>
+
+<!-- Settings Button -->
+<div class="settings-container" style="text-align: center; position: relative;">
+  <button id="settings-btn" class="settings-btn">Settings</button>
+</div>
+
+<!-- Settings Dropdown (initially hidden) -->
+<div id="settings-dropdown" class="settings-dropdown">
+  <!-- Category tags will be inserted here -->
+</div>
+
+
+
   <div class="info-text">
     The last 15 games played:
   </div>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "GameDash",
-  "version": "1.0.1",
+  "version": "1.1",
   "description": "Click to play a random browser game when you're bored!",
   "permissions": [
     "tabs",
