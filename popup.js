@@ -16,21 +16,22 @@ const gameCategories = [
   { name: 'sports', file: 'games/sports.txt' },
   { name: 'strategy', file: 'games/strategy.txt' },
   { name: 'survival', file: 'games/survival.txt' },
-  { name: 'visual-novel', file: 'games/visual-novel.xt' },
+  { name: 'visual-novel', file: 'games/visual-novel.txt' },
   { name: 'other', file: 'games/other.txt' },
 ];
 
-// Function to fetch game URLs from a specific file
 async function fetchGameLinks(filePath) {
   const response = await fetch(filePath);
   if (!response.ok) {
     throw new Error(`Error fetching game list from ${filePath}`);
   }
   const text = await response.text();
+  console.log('Fetched Games:', text); // Log the fetched text
   return text.split('\n').filter(link => link.trim() !== '');
 }
 
-// Get a random game from the enabled categories
+
+// Get a random game from the enabled categories, excluding recent games
 async function getRandomGame(enabledCategories) {
   let allGameLinks = [];
 
@@ -46,9 +47,16 @@ async function getRandomGame(enabledCategories) {
     }
   }
 
+  // Load recent games from storage
+  const { recentGames } = await browser.storage.local.get('recentGames');
+
+  // Filter out games already in recent games
+  const recentGameUrls = recentGames.map(game => game.url);
+  allGameLinks = allGameLinks.filter(link => !recentGameUrls.includes(link));
+
   // If no links found, return an error
   if (allGameLinks.length === 0) {
-    console.error('No games available from the selected categories');
+    console.error('No games available from the selected categories that are not in recent history');
     return null;
   }
 
@@ -57,37 +65,71 @@ async function getRandomGame(enabledCategories) {
   return allGameLinks[randomIndex];
 }
 
-// Event listener for random game button
-document.getElementById('random-game-btn').addEventListener('click', async () => {
-  const selectedCategories = await loadTags();
-  const randomGameUrl = await getRandomGame(selectedCategories);
-  
-  if (randomGameUrl) {
-    // Send a message to background.js to open the random game and update recent games
-    browser.runtime.sendMessage({ action: 'openRandomGame', url: randomGameUrl });
+
+// Toggle settings dropdown and move footer
+document.getElementById('settings-btn').addEventListener('click', () => {
+  const dropdown = document.getElementById('settings-dropdown');
+  const footer = document.querySelector('.footer');
+  const footerShift = 31; // Custom number of pixels to adjust
+  const settingsBtn = document.getElementById('settings-btn');
+
+  if (dropdown.style.display === 'none' || !dropdown.style.display) {
+    // Show the dropdown
+    dropdown.style.display = 'block';
+    // Move the footer down with a transition
+    footer.style.transition = 'transform 0.4s ease';
+    footer.style.transform = `translateY(${footerShift}px)`;
+
+    // add the active class to the settings button
+    settingsBtn.classList.add('active');
+    
+    // Resize the popup height to 400px
+    browser.runtime.sendMessage({ action: 'resizePopup', size: 400 });
   } else {
-    console.error("No valid game URL found.");
+    // Hide the dropdown
+    dropdown.style.display = 'none';
+    // Reset the footer position
+    footer.style.transform = 'translateY(0px)';
+    
+    // remove the active class from the settings button
+    settingsBtn.classList.remove('active');
+    
+    // Restore the original popup height
+    browser.runtime.sendMessage({ action: 'resizePopup', size: 'auto' });
   }
 });
+
 
 
 
 // Example usage for default (all categories enabled)
 const enabledCategories = gameCategories.map(cat => cat.name);
 
-// Handle settings button click
+// Toggle the settings menu visibility and content height
 document.getElementById('settings-btn').addEventListener('click', () => {
   const dropdown = document.getElementById('settings-dropdown');
-  
-  // Toggle the 'show' class
+  const body = document.body;
+
   if (dropdown.classList.contains('show')) {
+    // When closing the settings menu
     dropdown.classList.remove('show');
-    dropdown.style.maxHeight = '0px'; // Close the dropdown
+    dropdown.style.maxHeight = '0px';
+    
+    // Revert body height back to original
+    body.style.height = ''; // Reset to auto/initial height
+
   } else {
+    // When opening the settings menu
     dropdown.classList.add('show');
-    dropdown.style.maxHeight = '100%'; // Expand the dropdown to cover the content
+    dropdown.style.maxHeight = '272px'; // Ensure dropdown fits inside the content
+
+    // Set body height to 400px (fixed size) when settings are open
+    body.style.height = '420px';
   }
 });
+
+
+
 
 
 // Load tags from local storage
@@ -166,12 +208,35 @@ function renderGameList(recentGames) {
   });
 }
 
+// Function to update the recent games list
+async function updateRecentGames(randomGameUrl) {
+  if (!randomGameUrl) return;
+
+  // Send a message to background.js to open the random game and update recent games
+  browser.runtime.sendMessage({ action: 'openRandomGame', url: randomGameUrl });
+
+  // After sending the message, we can immediately load the recent games again to update the UI
+  const { recentGames } = await browser.storage.local.get('recentGames');
+  renderGameList(recentGames || []);
+}
+
 // Event listener for random game button
 document.getElementById('random-game-btn').addEventListener('click', async () => {
   const selectedCategories = await loadTags();
   const randomGameUrl = await getRandomGame(selectedCategories);
-  updateRecentGames(randomGameUrl);
+  
+  if (randomGameUrl) {
+    // Send a message to background.js to open the random game and update recent games
+    browser.runtime.sendMessage({ action: 'openRandomGame', url: randomGameUrl });
+  } else {
+    console.error("No valid game URL found.");
+  }
 });
+
+
+
+
+
 
 
 // Load recent games on popup open

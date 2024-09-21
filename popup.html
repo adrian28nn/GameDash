@@ -13,7 +13,12 @@
       background-color: #1e2030; 
     }
 
-    .header, .footer { 
+    .header{ 
+      padding: 15px 15px 8px 15px; 
+      background-color: #363a4f; 
+    }
+
+    .footer { 
       padding: 15px; 
       background-color: #363a4f; 
     }
@@ -87,6 +92,11 @@
       padding: 6px 10px 6px 10px; 
       margin: 12px;
       border-radius: 15px;
+      transition: margin-top 0.3s ease;
+    }
+
+    .footer.dropdown-open {
+      margin-top: 100px;
     }
 
     .footer span { 
@@ -122,45 +132,62 @@
       margin-right: 5px;
     }
 
-    .settings-container {
-  position: relative;
-  margin-bottom: 10px;
-}
+    .settings-container { 
+      padding: 0px 15px 8px 15px; 
+      background-color: #363a4f; 
+    }
 
 .settings-btn {
-  padding: 8px 15px;
-  background-color: #6e738d;
-  color: white;
+  width: 100%;
+  padding: 6px;
+  background-color: #363a4f;
+  color: #a5adcb;
   border: none;
-  border-radius: 10px;
+  border-radius: 7px;
   cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.2s;
 }
 
 .settings-btn:hover {
-  background-color: #b8c0e0;
+  background-color: #494d64;
+  color: #cad3f5;
+  transition: background-color 0.2s;
+}
+
+.settings-btn.active {
+  background-color: #5b6078;
+  color: #cad3f5;
+  transition: background-color 0.2s;
+}
+
+.settings-btn.active:hover {
+  background-color: #6e738d;
+  color: #cad3f5;
+  transition: background-color 0.2s;
 }
 
 /* Adjusting the dropdown to cover the entire popup */
 .settings-dropdown {
   position: absolute;
-  top: 100px; /* Just below the settings button */
+  top: 88px; /* Just below the settings button */
   left: 0;
   width: 100%;
-  height: calc(100% - 50px); /* Covering from the button down to the footer */
+  max-height: 0;
   background-color: #363a4f;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 15px 15px;
   padding: 10px;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: hidden;
   z-index: 999; /* Ensuring it covers all content */
-  display: none; /* Initially hidden */
-  transition: opacity 0.3s ease, max-height 0.3s ease; /* Smooth animation */
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out; /* Smooth animation */
   opacity: 0;
 }
 
 /* When the dropdown is visible */
 .settings-dropdown.show {
-  display: block;
+  max-height: 272px;
   opacity: 1;
 }
 
@@ -168,20 +195,28 @@
   display: inline-block;
   padding: 5px 10px;
   margin: 5px;
-  background-color: #6e738d;
+  background-color: #c6a0f6;
   border-radius: 20px;
-  color: white;
+  color: #363a4f;
   font-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .tag.disabled {
-  background-color: #b0b0b0;
+  background-color: #494d64;
+  color: #c6d0f5;
+  transition: background-color 0.3s;
+}
+
+.tag.disabled:hover {
+  background-color: #5b6078;
+  transition: background-color 0.3s;
 }
 
 .tag:hover {
-  background-color: #c6a0f6;
+  background-color: #e4b8ff;
+  transition: background-color 0.3s;
 }
 
 
@@ -197,7 +232,7 @@
 
 <!-- Settings Button -->
 <div class="settings-container" style="text-align: center; position: relative;">
-  <button id="settings-btn" class="settings-btn">Settings</button>
+  <button id="settings-btn" class="settings-btn">Select Genres</button>
 </div>
 
 <!-- Settings Dropdown (initially hidden) -->
