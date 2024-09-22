@@ -11,6 +11,7 @@
       padding: 0; 
       width: 300px; 
       background-color: #1e2030; 
+      overflow: hidden;
     }
 
     .header{ 
@@ -47,6 +48,7 @@
       font-size: 14px;
       margin: 4px 0px 0px 15px;
       color: #6e738d;
+      user-select: none;
 }
 
     .game-list { 
@@ -93,6 +95,7 @@
       margin: 12px;
       border-radius: 15px;
       transition: margin-top 0.3s ease;
+      user-select: none;
     }
 
     .footer.dropdown-open {
@@ -171,6 +174,8 @@
 /* Adjusting the dropdown to cover the entire popup */
 .settings-dropdown {
   position: absolute;
+  display: flex;
+  align-items: center;
   top: 88px; /* Just below the settings button */
   left: 0;
   width: 100%;
@@ -201,6 +206,7 @@
   font-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s;
+  user-select: none;
 }
 
 .tag.disabled {
@@ -221,6 +227,19 @@
 
 #game-list{
   scrollbar-color: #8087a2 #181926;
+}
+
+#game-list .game-item a {
+  margin-right: 10px;
+}
+
+#settings-btn {
+  position: relative;
+}
+
+#settings-btn img {
+  margin: 0;
+  pointer-events: none;
 }
 
 

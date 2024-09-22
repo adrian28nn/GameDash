@@ -69,27 +69,23 @@ async function getRandomGame(enabledCategories) {
 // Toggle settings dropdown and move footer
 document.getElementById('settings-btn').addEventListener('click', () => {
   const dropdown = document.getElementById('settings-dropdown');
-  const footer = document.querySelector('.footer');
-  const footerShift = 31; // Custom number of pixels to adjust
+
   const settingsBtn = document.getElementById('settings-btn');
 
   if (dropdown.style.display === 'none' || !dropdown.style.display) {
     // Show the dropdown
     dropdown.style.display = 'block';
-    // Move the footer down with a transition
-    footer.style.transition = 'transform 0.4s ease';
-    footer.style.transform = `translateY(${footerShift}px)`;
+
+
 
     // add the active class to the settings button
     settingsBtn.classList.add('active');
     
-    // Resize the popup height to 400px
-    browser.runtime.sendMessage({ action: 'resizePopup', size: 400 });
+
   } else {
     // Hide the dropdown
     dropdown.style.display = 'none';
-    // Reset the footer position
-    footer.style.transform = 'translateY(0px)';
+
     
     // remove the active class from the settings button
     settingsBtn.classList.remove('active');
@@ -108,15 +104,29 @@ const enabledCategories = gameCategories.map(cat => cat.name);
 // Toggle the settings menu visibility and content height
 document.getElementById('settings-btn').addEventListener('click', () => {
   const dropdown = document.getElementById('settings-dropdown');
+  const footer = document.querySelector('.footer');
   const body = document.body;
+  const settingsBtn = document.getElementById('settings-btn');
+
+  
 
   if (dropdown.classList.contains('show')) {
     // When closing the settings menu
     dropdown.classList.remove('show');
     dropdown.style.maxHeight = '0px';
+
+        // Remove the SVG when closing
+        const svgIcon = settingsBtn.querySelector('img');
+        if (svgIcon) {
+          settingsBtn.removeChild(svgIcon);
+        }
+
+
     
-    // Revert body height back to original
-    body.style.height = ''; // Reset to auto/initial height
+    // Create a delay before resetting the body height
+    setTimeout(() => {
+      body.style.height = ''; // Reset to auto/initial height
+    }, 300); // Adjust the delay as needed
 
   } else {
     // When opening the settings menu
@@ -125,11 +135,26 @@ document.getElementById('settings-btn').addEventListener('click', () => {
 
     // Set body height to 400px (fixed size) when settings are open
     body.style.height = '420px';
-  }
+
+    // Create an img element for the SVG
+    const svgIcon = document.createElement('img');
+    svgIcon.setAttribute('src', 'icons/circled-x.svg'); // Path to your SVG file
+    svgIcon.setAttribute('width', '14');
+    svgIcon.setAttribute('height', '14');
+    svgIcon.style.position = 'absolute'; // Position it absolutely
+    svgIcon.style.right = '10px'; // Align to the right
+    svgIcon.style.top = '50%'; // Center vertically
+    svgIcon.style.transform = 'translateY(-50%)'; // Adjust for centering
+
+    // Append the SVG
+    settingsBtn.appendChild(svgIcon);
+
+  // Calculate the dropdown height
+  const dropdownHeight = dropdown.offsetHeight;
+
+
+}
 });
-
-
-
 
 
 // Load tags from local storage
@@ -149,10 +174,16 @@ function renderTags(selectedCategories) {
   const dropdown = document.getElementById('settings-dropdown');
   dropdown.innerHTML = '';
 
+  // Apply center alignment for the tags in the dropdown
+  dropdown.style.textAlign = 'center';  // Center the content horizontally
+
   gameCategories.forEach(category => {
     const tag = document.createElement('div');
     tag.className = 'tag';
     tag.textContent = category.name;
+    
+    // Apply inline-block to make each tag respect horizontal centering
+    tag.style.display = 'inline-block';
     
     // Disable tag if not selected
     if (!selectedCategories.includes(category.name)) {
@@ -176,6 +207,7 @@ function renderTags(selectedCategories) {
   });
 }
 
+
 // Load and render tags when popup opens
 (async function() {
   const selectedCategories = await loadTags();
@@ -187,25 +219,36 @@ function renderTags(selectedCategories) {
 // Function to render the recent games list
 function renderGameList(recentGames) {
   const gameListElement = document.getElementById('game-list');
-  gameListElement.innerHTML = '';
+  const infoText = document.querySelector('.info-text');
+  
+  gameListElement.innerHTML = ''; // Clear existing content
 
-  recentGames.forEach(game => {
-      const gameItem = document.createElement('div');
-      gameItem.className = 'game-item';
+  if (recentGames.length === 0) {
+      infoText.style.display = 'none'; // Hide info text
+      gameListElement.style.display = 'none'; // Hide game list
+  } else {
+      infoText.style.display = ''; // Show info text
+      gameListElement.style.display = ''; // Show game list 
 
-      const favicon = document.createElement('img');
-      favicon.src = game.favicon;
+      recentGames.forEach(game => {
+          const gameItem = document.createElement('div');
+          gameItem.className = 'game-item';
 
-      const gameLink = document.createElement('a');
-      gameLink.href = game.url;
-      gameLink.textContent = game.title;
-      gameLink.target = '_blank';
+          const favicon = document.createElement('img');
+          favicon.src = game.favicon;
 
-      gameItem.appendChild(favicon);
-      gameItem.appendChild(gameLink);
-      gameListElement.appendChild(gameItem);
-  });
+          const gameLink = document.createElement('a');
+          gameLink.href = game.url;
+          gameLink.textContent = game.title;
+          gameLink.target = '_blank';
+
+          gameItem.appendChild(favicon);
+          gameItem.appendChild(gameLink);
+          gameListElement.appendChild(gameItem);
+      });
+  }
 }
+
 
 // Listen for messages from background.js to update the recent games list
 browser.runtime.onMessage.addListener((message) => {
