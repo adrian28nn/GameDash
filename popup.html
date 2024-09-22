@@ -5,24 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GameDash</title>
   <style>
-    body { 
-      font-family: system-ui; 
-      margin: 0; 
-      padding: 0; 
-      width: 300px; 
-      background-color: #1e2030; 
-      overflow: hidden;
-    }
+  body {
+    font-family: system-ui;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    background-color: #1e2030;
+    overflow: hidden;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-wrapper {
+    margin: 22px;
+  }
 
     .header{ 
       padding: 15px 15px 8px 15px; 
       background-color: #363a4f; 
     }
 
-    .footer { 
-      padding: 15px; 
-      background-color: #363a4f; 
-    }
+
 
     .header button { 
       width: 100%; 
@@ -51,12 +55,13 @@
       user-select: none;
 }
 
-    .game-list { 
-      max-height: 200px; 
-      overflow-y: auto; 
-      padding: 0px; 
-      margin: 6px 15px 15px 15px;
-    }
+.game-list {
+    flex-grow: 1; /* Game list can expand and push the footer down */
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0px;
+    margin: 6px 15px 15px 15px;
+  }
 
     .game-item { 
       display: flex; 
@@ -88,19 +93,22 @@
     }
 
     .footer { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
       padding: 6px 10px 6px 10px; 
+      background-color: #363a4f; 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin: 12px;
       border-radius: 15px;
-      transition: margin-top 0.3s ease;
       user-select: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
 
-    .footer.dropdown-open {
-      margin-top: 100px;
-    }
+
+  
 
     .footer span { 
       font-size: 16px; 
@@ -242,8 +250,6 @@
   pointer-events: none;
 }
 
-
-
   </style>
 </head>
 <body>
@@ -268,10 +274,11 @@
     The last 15 games played:
   </div>
   <!-- Scrollable List of Recent Games -->
+   
   <div class="game-list" id="game-list">
     <!-- Game items will be inserted here -->
   </div>
-
+  <div class="content-wrapper">
   <!-- Footer with Extension Name and Links -->
   <div class="footer">
     <span>GameDash</span>
@@ -283,6 +290,7 @@
       </a>
     </div>
   </div>
+</div>
 
   <script src="popup.js"></script>
 </body>

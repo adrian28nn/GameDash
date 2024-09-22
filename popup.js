@@ -104,7 +104,6 @@ const enabledCategories = gameCategories.map(cat => cat.name);
 // Toggle the settings menu visibility and content height
 document.getElementById('settings-btn').addEventListener('click', () => {
   const dropdown = document.getElementById('settings-dropdown');
-  const footer = document.querySelector('.footer');
   const body = document.body;
   const settingsBtn = document.getElementById('settings-btn');
 
@@ -121,12 +120,12 @@ document.getElementById('settings-btn').addEventListener('click', () => {
           settingsBtn.removeChild(svgIcon);
         }
 
-
+        
     
     // Create a delay before resetting the body height
     setTimeout(() => {
       body.style.height = ''; // Reset to auto/initial height
-    }, 300); // Adjust the delay as needed
+    }, 0); // Adjust the delay as needed
 
   } else {
     // When opening the settings menu
@@ -135,6 +134,7 @@ document.getElementById('settings-btn').addEventListener('click', () => {
 
     // Set body height to 400px (fixed size) when settings are open
     body.style.height = '420px';
+
 
     // Create an img element for the SVG
     const svgIcon = document.createElement('img');
@@ -149,8 +149,6 @@ document.getElementById('settings-btn').addEventListener('click', () => {
     // Append the SVG
     settingsBtn.appendChild(svgIcon);
 
-  // Calculate the dropdown height
-  const dropdownHeight = dropdown.offsetHeight;
 
 
 }
