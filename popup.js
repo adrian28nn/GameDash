@@ -48,7 +48,7 @@ async function getRandomGame(enabledCategories) {
   }
 
   // Load recent games from storage
-  const { recentGames } = await browser.storage.local.get('recentGames');
+  const { recentGames = [] } = await browser.storage.local.get('recentGames');
 
   // Filter out games already in recent games
   const recentGameUrls = recentGames.map(game => game.url);
@@ -184,8 +184,7 @@ function renderTags(selectedCategories) {
 
 
 
-
-// Render the recent games list
+// Function to render the recent games list
 function renderGameList(recentGames) {
   const gameListElement = document.getElementById('game-list');
   gameListElement.innerHTML = '';
@@ -208,17 +207,19 @@ function renderGameList(recentGames) {
   });
 }
 
-// Function to update the recent games list
-async function updateRecentGames(randomGameUrl) {
-  if (!randomGameUrl) return;
+// Listen for messages from background.js to update the recent games list
+browser.runtime.onMessage.addListener((message) => {
+  if (message.action === 'updateGameList') {
+    // Fetch the updated recent games list from storage and re-render it
+    browser.storage.local.get('recentGames', (data) => {
+      const recentGames = data.recentGames || [];
+      renderGameList(recentGames);
+    });
+  }
+});
 
-  // Send a message to background.js to open the random game and update recent games
-  browser.runtime.sendMessage({ action: 'openRandomGame', url: randomGameUrl });
 
-  // After sending the message, we can immediately load the recent games again to update the UI
-  const { recentGames } = await browser.storage.local.get('recentGames');
-  renderGameList(recentGames || []);
-}
+
 
 // Event listener for random game button
 document.getElementById('random-game-btn').addEventListener('click', async () => {
