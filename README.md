@@ -8,7 +8,8 @@ This extension lets you play a random browser-based game from a curated collecti
  - **Random Game Fun:** Every time you hit the button, GameDash sends you to a random browser game. Perfect for when you’re bored and indecisive!
  - **Game History:** Keep track of your adventures with a handy list of the last 15 games you’ve played. Want to revisit a game? No problem - click the link in the list and jump back into action.
  - **No Repeats:** Don’t worry about seeing the same game twice! As long as a game is in your list of recent games, it won’t come up again until it’s rotated out.
- - **Curated Game List:** All games are handpicked from a collection of browser-based titles sourced from itch.io. The list is hosted on GitHub, allowing for easy and frequent updates, so you'll always have new games to explore!
+ - **Curated Game List:** All games are handpicked from a collection of browser-based titles sourced from itch.io.
+ - **Genre Selection:** Looking for something specific? GameDash offers a wide variety of genres to choose from, including action, puzzle, strategy, visual-novel, and even educational games. 
 
 </br>
 
