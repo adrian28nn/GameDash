@@ -26,7 +26,6 @@ async function fetchGameLinks(filePath) {
     throw new Error(`Error fetching game list from ${filePath}`);
   }
   const text = await response.text();
-  console.log('Fetched Games:', text); // Log the fetched text
   return text.split('\n').filter(link => link.trim() !== '');
 }
 

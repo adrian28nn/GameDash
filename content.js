@@ -13,7 +13,7 @@ function getGameTitle() {
   if (titleElement) {
       return titleElement.textContent.trim();
   }
-  return '-title not found-'; // if the title is not found
+  return '-title not found-';
 }
 
 // Listen for messages from the popup script
