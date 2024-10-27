@@ -4,6 +4,13 @@ Ever been so bored you couldn't figure out what to do? Well, say goodbye to bore
 
 This extension lets you play a random browser-based game from a curated collection of indie titles when you need something to pass the time. Just hit the button, and boom - you’re transported to a game you probably didn’t know existed but will love.
 
+</br>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adrian28nn/GameDash/refs/heads/main/icons%20and%20screenshots/screenshot.png"/> <img src="https://raw.githubusercontent.com/adrian28nn/GameDash/refs/heads/main/icons%20and%20screenshots/screenshot-genres.png"/>
+</p>
+
+
 ### Features:
  - **Random Game Fun:** Every time you hit the button, GameDash sends you to a random browser game. Perfect for when you’re bored and indecisive!
  - **Game History:** Keep track of your adventures with a handy list of the last 15 games you’ve played. Want to revisit a game? No problem - click the link in the list and jump back into action.
